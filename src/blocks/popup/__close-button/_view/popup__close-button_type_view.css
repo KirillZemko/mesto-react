@@ -1,0 +1,11 @@
+.popup__close-button_type_view {
+  top: -45px;
+  right: -45px;
+}
+
+@media (min-width: 320px) and (max-width: 425px) {
+  .popup__close-button_type_view {
+    right: 0;
+    top: -50px;
+  }
+}

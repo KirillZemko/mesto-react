@@ -1,0 +1,24 @@
+.logo {
+  background-image: url(../../images/logo.svg);
+  background-repeat: no-repeat;
+  background-size: contain;
+  min-width: 142px;
+  min-height: 33px;
+  margin-bottom: 41px;
+  display: inline-block;
+  transition: .3s linear;
+}
+
+.logo:hover {
+  transition: .3s linear;
+  opacity: .6;
+}
+
+@media (min-width: 320px) and (max-width: 425px){
+  .logo {
+      min-width: 103.74px;
+      min-height: 24.4px;
+      margin-left: 27px;
+      margin-bottom: 31.6px;
+    }
+}
