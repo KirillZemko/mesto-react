@@ -1,10 +1,15 @@
 import React from "react";
 
-export function Card(props) {
+function Card(props) {
+
+  function handleClick() {
+    props.onCardClick(props.name, props.link);
+  }
+
   return (
     <article className="place">
       <a className="place__image-link" href="#">
-        <img className="place__image" src={props.link} alt={props.name} />
+        <img className="place__image" src={props.link} alt={props.name} onClick={handleClick} />
       </a>
       <div className="place__desription">
         <h2 className="place__title">{props.name}</h2>

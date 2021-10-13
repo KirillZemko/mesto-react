@@ -4,12 +4,13 @@ import Main from "./Main";
 import Footer from "./Footer";
 import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup";
-import { Card } from "./Card";
 
 function App() {
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
+  const [isImagePopupOpen, setIsImagePopupOpen] = React.useState(false)
+  const [selectedCard, setSelectedCard] = React.useState(false);
 
   function handleEditAvatarClick() {
     setIsEditAvatarPopupOpen(true);
@@ -27,12 +28,18 @@ function App() {
     setIsEditAvatarPopupOpen(false);
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
+    setIsImagePopupOpen(false);
+  }
+
+  function handleCardClick(name, link) {
+    setSelectedCard({name, link});
+    setIsImagePopupOpen(true);
   }
 
   return (
     <div className="page">
       <Header />
-      <Main onEditAvatar={handleEditAvatarClick} onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick} />
+      <Main onEditAvatar={handleEditAvatarClick} onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick} onCardClick={handleCardClick} />
       <Footer />
       <PopupWithForm title="Редактировать автар" name="edit-avatar" buttonName="Сохарнить" isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups}>
         <fieldset className="popup__profile-info popup__profile-edit-avatar">
@@ -69,9 +76,8 @@ function App() {
           <button className="popup__button popup__button_type-add-card" type="submit">Создать</button>
         </fieldset>
       </PopupWithForm>
-
       <PopupWithForm title="Вы уверены?" name="conformation" buttonName="Да"/>
-
+      <ImagePopup isOpen={isImagePopupOpen} onClose={closeAllPopups} card={selectedCard}/>
     </div>
   );
 }

@@ -46,7 +46,7 @@ function Main(props) {
         <section className="places">
           {
             cards.map((item) => {
-              return <Card name={item.name} link={item.link} likes={item.likes.length} key={item._id}/>
+              return <Card name={item.name} link={item.link} likes={item.likes.length} key={item._id} onCardClick={props.onCardClick} />
             })
           }
         </section>
