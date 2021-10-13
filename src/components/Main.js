@@ -1,39 +1,27 @@
-function handleEditAvatarClick() {
-  const popupEditAvatar = document.querySelector('.popup_edit-avatar');
-  popupEditAvatar.classList.add('popup_opened');
-}
+import React from "react";
 
-function handleEditProfileClick() {
-  const popupEditProfile = document.querySelector('.popup_edit');
-  popupEditProfile.classList.add('popup_opened');
-}
-
-function handleAddPlaceClick() {
-  const popupAddPlace = document.querySelector('.popup_add-card');
-  popupAddPlace.classList.add('popup_opened');
-}
-
-function Main() {
+function Main(props) {
   return (
     <main className="content" id="content">
+
         <section className="profile">
           <div className="profile__info">
             <div className="avatar-conatainer">
-              <img className="profile__avatar" src="<%=require('./images/avatar.jpg')%>" alt="Аватар" />
-              <button onClick={handleEditAvatarClick} className="profile__avatar-edit-button"></button>
+              <img onClick={props.onEditAvatar} className="profile__avatar" src=">" alt="Аватар" />
+              <button className="profile__avatar-edit-button"></button>
             </div>
               <div className="profile__text-wrapper">
                 <div className="profile__name-wrapper">
                   <h1 className="profile__name">Жак-Ив Кусто</h1>
-                  <button onClick={handleEditProfileClick} className="edit-button" type="button" aria-label="Редактировать профиль"></button>
+                  <button onClick={props.onEditProfile} className="edit-button" type="button" aria-label="Редактировать профиль"></button>
                 </div>
                 <p className="profile__job">Исследователь океана</p>
               </div>
           </div>
-          <button onClick={handleAddPlaceClick} className="add-button" type="button" aria-label="Добавить"></button>
+          <button onClick={props.onAddPlace} className="add-button" type="button" aria-label="Добавить"></button>
         </section>
-        <section className="places">
-        </section>
+
+        <section className="places"></section>
 
         <div className="popup popup_edit">
           <div className="popup__container">
