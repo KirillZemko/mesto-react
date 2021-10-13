@@ -1,21 +1,40 @@
 import React from "react";
+import { api } from '../utils/Api.js';
 
 function Main(props) {
+  const [userName, setUserName] = React.useState('Земко Кирилл');
+  const [userDescription, setUserDescription] = React.useState('Студент 27 потока');
+  const [userAvatar, setUserAvatar] = React.useState();
+  const [cards, setCards] = React.useState([]);
+
+  React.useEffect(() => {
+    Promise.all([api.getOriginsCards(), api.getUserInfo()])
+      .then(([data, item]) => {
+        setUserName(item.name);
+        setUserDescription(item.about);
+        setUserAvatar(item.avatar);
+        setCards(data);
+      })
+      .catch((err) => {
+        console.log(err)
+    });
+  });
+
   return (
     <main className="content" id="content">
 
         <section className="profile">
           <div className="profile__info">
             <div className="avatar-conatainer">
-              <img onClick={props.onEditAvatar} className="profile__avatar" src=">" alt="Аватар" />
-              <button className="profile__avatar-edit-button"></button>
+              <img className="profile__avatar"  src={userAvatar} alt="Аватар" />
+              <button onClick={props.onEditAvatar} className="profile__avatar-edit-button"></button>
             </div>
               <div className="profile__text-wrapper">
                 <div className="profile__name-wrapper">
-                  <h1 className="profile__name">Жак-Ив Кусто</h1>
+                  <h1 className="profile__name">{userName}</h1>
                   <button onClick={props.onEditProfile} className="edit-button" type="button" aria-label="Редактировать профиль"></button>
                 </div>
-                <p className="profile__job">Исследователь океана</p>
+                <p className="profile__job">{userDescription}</p>
               </div>
           </div>
           <button onClick={props.onAddPlace} className="add-button" type="button" aria-label="Добавить"></button>
