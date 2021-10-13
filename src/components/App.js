@@ -4,6 +4,7 @@ import Main from "./Main";
 import Footer from "./Footer";
 import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup";
+import { Card } from "./Card";
 
 function App() {
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
@@ -69,21 +70,8 @@ function App() {
         </fieldset>
       </PopupWithForm>
 
-      <template className="place-template">
-        <article className="place">
-          <a className="place__image-link" href="#">
-            <img className="place__image" src="#" alt="#" />
-          </a>
-          <div className="place__desription">
-            <h2 className="place__title"></h2>
-            <div className="place__like-container">
-              <button className="place__like" aria-label="лайк" type="button"></button>
-              <p className="place__like-counter"></p>
-            </div>
-          </div>
-          <button className="place__trash-btn" type="button"></button>
-        </article>
-      </template>
+      <PopupWithForm title="Вы уверены?" name="conformation" buttonName="Да"/>
+
     </div>
   );
 }
