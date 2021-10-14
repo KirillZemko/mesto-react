@@ -2,7 +2,8 @@ import React from "react";
 
 function Card(props) {
 
-  function handleClick() {
+  function handleClick(evt) {
+    evt.preventDefault();
     props.onCardClick(props.name, props.link);
   }
 

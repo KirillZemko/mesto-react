@@ -15,13 +15,11 @@ function Main(props) {
         setUserDescription(item.about);
         setUserAvatar(item.avatar);
         setCards(data);
-
-        console.log(data);
       })
       .catch((err) => {
         console.log(err);
     });
-  });
+  }, []);
 
   return (
     <main className="content" id="content">
@@ -46,7 +44,9 @@ function Main(props) {
         <section className="places">
           {
             cards.map((item) => {
-              return <Card name={item.name} link={item.link} likes={item.likes.length} key={item._id} onCardClick={props.onCardClick} />
+              return (
+                <Card name={item.name} link={item.link} likes={item.likes.length} key={item._id} onCardClick={props.onCardClick} />
+              );
             })
           }
         </section>
