@@ -46,7 +46,7 @@ function App() {
       setCurrnetUser(user);
     })
     .catch((value) => {
-      console.log('Запрос не выполнен' + value)
+      console.log('Ошибка! Запрос не выполнен!' + value)
     })
   }, []);
 
