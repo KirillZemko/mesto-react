@@ -14,8 +14,12 @@ function Card(props) {
 
   function handleClick(evt) {
     evt.preventDefault();
-    props.onCardClick(props.name, props.link);
+    props.onCardClick(props.cardInfo.name, props.cardInfo.link);
   }
+
+  function handleLikeClick() {
+    props.onCardLike(props.cardInfo);
+  };
 
   return (
     <article className="place">
@@ -25,7 +29,7 @@ function Card(props) {
       <div className="place__desription">
         <h2 className="place__title">{props.cardInfo.name}</h2>
         <div className="place__like-container">
-          <button className="place__like" aria-label="лайк" type="button"></button>
+          <button onClick={handleLikeClick} className={cardLikeButtonClassName} aria-label="лайк" type="button"></button>
           <p className="place__like-counter">{props.cardInfo.likes.length}</p>
         </div>
       </div>

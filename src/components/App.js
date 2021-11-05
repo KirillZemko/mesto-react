@@ -41,6 +41,18 @@ function App() {
     setIsImagePopupOpen(true);
   }
 
+  function handleCardLike(card) {
+    const isLiked = card.likes.some(i => i._id === currentUser._id);
+
+    api.changeLikeCardStatus(card._id, !isLiked)
+      .then((newCard) => {
+        setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
+      })
+      .catch((value) => {
+        console.log('Ошибка:' + value);
+      })
+  }
+
   React.useEffect(() => {
     api.getOriginsCards()
      .then((cards) => {
@@ -65,7 +77,7 @@ function App() {
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
         <Header />
-        <Main cards={cards} onEditAvatar={handleEditAvatarClick} onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick} onCardClick={handleCardClick} />
+        <Main cards={cards} onEditAvatar={handleEditAvatarClick} onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick} onCardLike={handleCardLike} onCardClick={handleCardClick} />
         <Footer />
 
         <PopupWithForm title="Редактировать автар" name="edit-avatar" buttonText={"Сохранить"} buttonName="Сохарнить" isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups}>

@@ -4,25 +4,8 @@ import Card from "./Card.js";
 import { CurrentUserContext } from "../contexts/CurrentUserContext.js";
 
 function Main(props) {
-  // const [userName, setUserName] = React.useState('Земко Кирилл');
-  // const [userDescription, setUserDescription] = React.useState('Студент 27 потока');
-  // const [userAvatar, setUserAvatar] = React.useState();
-  // const [cards, setCards] = React.useState([]);
-
-  // React.useEffect(() => {
-  //   Promise.all([api.getOriginsCards(), api.getUserInfo()])
-  //     .then(([data, item]) => {
-  //       setUserName(item.name);
-  //       setUserDescription(item.about);
-  //       setUserAvatar(item.avatar);
-  //       setCards(data);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //   });
-  // }, []);
-
   const currentUser = React.useContext(CurrentUserContext);
+  // const [cards, setCards] = React.useState([]);
 
   return (
 
@@ -50,7 +33,9 @@ function Main(props) {
               return (
                 <Card
                   currentUser={currentUser._id}
-                  cardInfo={item} key={item.__id}
+                  cardInfo={item}
+                  key={item.__id}
+                  onCardLike={props.onCardLike}
                   onCardClick={props.onCardClick}
                 />
               );
