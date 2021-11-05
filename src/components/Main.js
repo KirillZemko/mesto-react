@@ -37,6 +37,7 @@ function Main(props) {
                   key={item.__id}
                   onCardLike={props.onCardLike}
                   onCardClick={props.onCardClick}
+                  onCardDelete={props.onCardDelete}
                 />
               );
             })
