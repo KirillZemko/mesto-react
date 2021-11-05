@@ -14,6 +14,7 @@ function App() {
   const [isImagePopupOpen, setIsImagePopupOpen] = React.useState(false)
   const [selectedCard, setSelectedCard] = React.useState( {name: '', link: ''} );
   const [currentUser, setCurrnetUser] = React.useState({});
+  const [cards, setCards] = React.useState([]);
 
   function handleEditAvatarClick() {
     setIsEditAvatarPopupOpen(true);
@@ -42,19 +43,29 @@ function App() {
 
   React.useEffect(() => {
     api.getOriginsCards()
-    .then((user) => {
-      setCurrnetUser(user);
-    })
-    .catch((value) => {
+     .then((cards) => {
+      setCards(cards);
+     })
+     .catch((value) => {
       console.log('Ошибка! Запрос не выполнен!' + value)
-    })
+     })
   }, []);
+
+  React.useEffect(() => {
+    api.getUserInfo()
+     .then((user) => {
+      setCurrnetUser(user);
+     })
+     .catch((value) => {
+      console.log('Ошибка! Запрос не выполнен!' + value);
+     })
+  }, [])
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
         <Header />
-        <Main onEditAvatar={handleEditAvatarClick} onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick} onCardClick={handleCardClick} />
+        <Main cards={cards} onEditAvatar={handleEditAvatarClick} onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick} onCardClick={handleCardClick} />
         <Footer />
 
         <PopupWithForm title="Редактировать автар" name="edit-avatar" buttonText={"Сохранить"} buttonName="Сохарнить" isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups}>
