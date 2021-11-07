@@ -2,6 +2,8 @@ import React from "react";
 import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
+import EditProfilePopup from "./EditProfilePopup";
+import EditAvatarPopup from "./EditAvatarPopup";
 import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup";
 import { api } from "../utils/Api";
@@ -13,7 +15,7 @@ function App() {
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
   const [isImagePopupOpen, setIsImagePopupOpen] = React.useState(false)
   const [selectedCard, setSelectedCard] = React.useState( {name: '', link: ''} );
-  const [currentUser, setCurrnetUser] = React.useState({});
+  const [currentUser, setCurrentUser] = React.useState({});
   const [cards, setCards] = React.useState([]);
 
   function handleEditAvatarClick() {
@@ -69,19 +71,29 @@ function App() {
       setCards(cards);
      })
      .catch((value) => {
-      console.log('Ошибка! Запрос не выполнен!' + value)
+      console.log('Ошибка: ' + value)
      })
   }, []);
 
   React.useEffect(() => {
     api.getUserInfo()
      .then((user) => {
-      setCurrnetUser(user);
+      setCurrentUser(user);
      })
      .catch((value) => {
-      console.log('Ошибка! Запрос не выполнен!' + value);
+      console.log('Ошибка: ' + value);
      })
   }, [])
+
+  function handleUpdateUser({ name, about }) {
+    api.editProfile(name, about)
+      .then((user) => {
+        setCurrentUser(user);
+        closeAllPopups();
+      })
+      .catch((value) => {
+        console.log('Ошибка: ' + value)})
+  }
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -90,23 +102,7 @@ function App() {
         <Main cards={cards} onEditAvatar={handleEditAvatarClick} onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick} onCardLike={handleCardLike} onCardClick={handleCardClick} onCardDelete={handleCardDelete} />
         <Footer />
 
-        <PopupWithForm title="Редактировать автар" name="edit-avatar" buttonText={"Сохранить"} buttonName="Сохарнить" isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups}>
-          <section className="popup__input-section">
-            <input className="popup__input popup__input_type_avatar-link" id="input-avatar-link" placeholder="Ссылка на автар" type="url" name="link" required />
-            <span className="popup__input-error" id="input-url-error-avatar"></span>
-          </section>
-        </PopupWithForm>
-
-        <PopupWithForm title="Редактировать профиль" name="edit" buttonText={"Сохранить"} buttonName="Сохарнить" isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} >
-          <section className="popup__input-section">
-            <input className="popup__input popup__input_type_name" id="input-name" placeholder="" type="text" name="name" required minLength="2" maxLength="40" />
-            <span className="popup__input-error" id="input-name-error"></span>
-          </section>
-          <section className="popup__input-section">
-            <input className="popup__input popup__input_type_job" id="input-job" placeholder="" type="text" name="about" required minLength="2" maxLength="200" />
-            <span className="popup__input-error" id="input-job-error"></span>
-          </section>
-        </ PopupWithForm>
+        <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser}/>
 
         <PopupWithForm title="Название" name="add-card" buttonText={"Создать"} buttonName="Сохарнить" isOpen={isAddPlacePopupOpen} onClose={closeAllPopups}>
           <div className="popup__input-section">

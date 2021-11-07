@@ -37,18 +37,6 @@ export default class Api {
      .then(this._checkResponse);
   }
 
-  postUserInfo({ name, about }) {
-    return fetch(`${this._address}/users/me`, {
-      method: 'PATCH',
-      headers: this._headers,
-      body: JSON.stringify({
-        name: name,
-        about: about,
-      })
-    })
-     .then(this._checkResponse)
-  }
-
   addNewCard({ name, link }) {
     return fetch(`${this._address}/cards`, {
       method: 'POST',
@@ -84,6 +72,21 @@ export default class Api {
     })
      .then(this._checkResponse);
  }
+
+  editProfile(userName, info) {
+    return fetch(`${this._address}/users/me`, {
+      method: 'PATCH',
+      headers: this._headers,
+      body: JSON.stringify(
+        {
+        name: userName,
+        about: info
+        }
+      )
+    })
+    .then(this._checkResponse)
+  }
+
 }
 
 const pass = {

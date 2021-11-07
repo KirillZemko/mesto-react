@@ -34,7 +34,7 @@ function Main(props) {
                 <Card
                   currentUser={currentUser._id}
                   cardInfo={item}
-                  key={item.__id}
+                  key={item._id}
                   onCardLike={props.onCardLike}
                   onCardClick={props.onCardClick}
                   onCardDelete={props.onCardDelete}
