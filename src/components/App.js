@@ -67,24 +67,35 @@ function App() {
      })
   }
 
-  React.useEffect(() => {
-    api.getOriginsCards()
-     .then((cards) => {
-      setCards(cards);
-     })
-     .catch((value) => {
-      console.log('Ошибка: ' + value)
-     })
-  }, []);
+  // React.useEffect(() => {
+  //   api.getOriginsCards()
+  //    .then((cards) => {
+  //     setCards(cards);
+  //    })
+  //    .catch((value) => {
+  //     console.log('Ошибка: ' + value)
+  //    })
+  // }, []);
+
+  // React.useEffect(() => {
+  //   api.getUserInfo()
+  //    .then((user) => {
+  //     setCurrentUser(user);
+  //    })
+  //    .catch((value) => {
+  //     console.log('Ошибка: ' + value);
+  //    })
+  // }, [])
 
   React.useEffect(() => {
-    api.getUserInfo()
-     .then((user) => {
-      setCurrentUser(user);
+    Promise.all([api.getUserInfo(), api.getOriginsCards()])
+     .then(([ user, cards ]) => {
+       setCurrentUser(user);
+       setCards(cards);
      })
-     .catch((value) => {
-      console.log('Ошибка: ' + value);
-     })
+      .catch((value) => {
+        console.log('Ошибка: ' + value)
+      })
   }, [])
 
   function handleUpdateUser({ name, about }) {
