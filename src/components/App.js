@@ -4,10 +4,12 @@ import Main from "./Main";
 import Footer from "./Footer";
 import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
+import AddPlacePopup from "./AddPlacePopup";
 import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup";
 import { api } from "../utils/Api";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
+
 
 function App() {
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
@@ -105,6 +107,21 @@ function App() {
       console.log('Ошибка: ' + value)})
   }
 
+  function handleAddPlaceClick() {
+    setIsAddPlacePopupOpen(true);
+  };
+
+  function handleAddPlace({name, link}) {
+    api.addNewCard(name, link)
+     .then((newCard) => {
+      setCards([newCard, ...cards]);
+      closeAllPopups();
+     })
+     .catch((value) => {
+      console.log('Ошибка: ' + value)
+    })
+ };
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
@@ -114,17 +131,7 @@ function App() {
 
         <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser}/>
         <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar} />
-
-        <PopupWithForm title="Название" name="add-card" buttonText={"Создать"} buttonName="Сохарнить" isOpen={isAddPlacePopupOpen} onClose={closeAllPopups}>
-          <div className="popup__input-section">
-            <input className="popup__input popup__input_type_title" id="input-title" placeholder="Название" type="text" name="name" required minLength="2" maxLength="30" />
-            <span className="popup__input-error" id="input-title-error"></span>
-          </div>
-          <div className="popup__input-section">
-            <input className="popup__input popup__input_type_url" id="input-url" placeholder="Ссылка на картинку" type="url" name="link" required />
-            <span className="popup__input-error" id="input-url-error"></span>
-          </div>
-        </PopupWithForm>
+        <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddPlace={handleAddPlace} />
 
         <PopupWithForm title="Вы уверены?" name="conformation" buttonText={"Да"}/>
 

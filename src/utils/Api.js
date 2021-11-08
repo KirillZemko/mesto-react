@@ -37,7 +37,7 @@ export default class Api {
      .then(this._checkResponse);
   }
 
-  addNewCard({ name, link }) {
+  addNewCard(name, link) {
     return fetch(`${this._address}/cards`, {
       method: 'POST',
       headers: this._headers,
