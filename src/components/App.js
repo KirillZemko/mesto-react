@@ -3,7 +3,7 @@ import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
 import EditProfilePopup from "./EditProfilePopup";
-// import EditAvatarPopup from "./EditAvatarPopup";
+import EditAvatarPopup from "./EditAvatarPopup";
 import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup";
 import { api } from "../utils/Api";
@@ -95,6 +95,16 @@ function App() {
         console.log('Ошибка: ' + value)})
   }
 
+  function handleUpdateAvatar({avatar}) {
+    api.editUserAvatar(avatar)
+     .then((link) => {
+       setCurrentUser(link);
+       closeAllPopups();
+     })
+     .catch((value) => {
+      console.log('Ошибка: ' + value)})
+  }
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
@@ -103,6 +113,7 @@ function App() {
         <Footer />
 
         <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser}/>
+        <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar} />
 
         <PopupWithForm title="Название" name="add-card" buttonText={"Создать"} buttonName="Сохарнить" isOpen={isAddPlacePopupOpen} onClose={closeAllPopups}>
           <div className="popup__input-section">
