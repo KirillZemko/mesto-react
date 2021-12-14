@@ -10,7 +10,6 @@ import ImagePopup from "./ImagePopup";
 import { api } from "../utils/Api";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
-
 function App() {
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
@@ -67,26 +66,6 @@ function App() {
      })
   }
 
-  // React.useEffect(() => {
-  //   api.getOriginsCards()
-  //    .then((cards) => {
-  //     setCards(cards);
-  //    })
-  //    .catch((value) => {
-  //     console.log('Ошибка: ' + value)
-  //    })
-  // }, []);
-
-  // React.useEffect(() => {
-  //   api.getUserInfo()
-  //    .then((user) => {
-  //     setCurrentUser(user);
-  //    })
-  //    .catch((value) => {
-  //     console.log('Ошибка: ' + value);
-  //    })
-  // }, [])
-
   React.useEffect(() => {
     Promise.all([api.getUserInfo(), api.getOriginsCards()])
      .then(([ user, cards ]) => {
@@ -140,13 +119,13 @@ function App() {
         <Main cards={cards} onEditAvatar={handleEditAvatarClick} onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick} onCardLike={handleCardLike} onCardClick={handleCardClick} onCardDelete={handleCardDelete} />
         <Footer />
 
-        <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser}/>
+        <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} />
         <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar} />
         <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddPlace={handleAddPlace} />
 
-        <PopupWithForm title="Вы уверены?" name="conformation" buttonText={"Да"}/>
+        <PopupWithForm title="Вы уверены?" name="conformation" buttonText={"Да"} />
 
-        <ImagePopup isOpen={isImagePopupOpen} onClose={closeAllPopups} card={selectedCard}/>
+        <ImagePopup isOpen={isImagePopupOpen} onClose={closeAllPopups} card={selectedCard} />
       </div>
     </CurrentUserContext.Provider>
   );

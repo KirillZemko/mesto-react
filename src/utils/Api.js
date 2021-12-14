@@ -79,8 +79,8 @@ export default class Api {
       headers: this._headers,
       body: JSON.stringify(
         {
-        name: userName,
-        about: info
+          name: userName,
+          about: info
         }
       )
     })
